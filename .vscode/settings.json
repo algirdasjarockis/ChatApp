@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "connectString": "postgresql://app:!ChangeMe!@127.0.0.1:63153/app?serverVersion=16&charset=utf8",
+            "name": "chatapp"
+        }
+    ]
+}
