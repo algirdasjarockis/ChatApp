@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Conversation;
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,20 +22,26 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-//    /**
-//     * @return Message[] Returns an array of Message objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function saveMessage(Message $message): void
+    {
+        $this->getEntityManager()->persist($message);
+        $this->getEntityManager()->flush();
+    }
+
+   /**
+    * @return Message[] Returns an array of Message objects
+    */
+   public function findByConversation(Conversation $conversation): array
+   {
+       return $this->createQueryBuilder('m')
+           ->andWhere('m.conversation = :conversation')
+           ->setParameter('conversation', $conversation)
+           ->orderBy('m.id', 'ASC')
+           ->setMaxResults(100)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Message
 //    {

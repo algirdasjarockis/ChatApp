@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ORM\Table(indexes: ["name" => "created_at_index","columns" => "created_at"])]
 #[ORM\HasLifecycleCallbacks]
-class Message
+class Message implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,9 +29,21 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?Conversation $conversation = null;
 
+    private bool $isMine = false;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isMine(): bool
+    {
+        return $this->isMine;
+    }
+
+    public function setIsMine(bool $isMine)
+    {
+        $this->isMine = $isMine;
     }
 
     public function getContent(): ?string
@@ -86,5 +98,15 @@ class Message
     public function prePersist()
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "id" => $this->getId(),
+            "content" => $this->getContent(),
+            "createdAt" => $this->getCreatedAt(),
+            "mine" => $this->isMine()
+        ];
     }
 }
