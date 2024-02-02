@@ -4,7 +4,8 @@
         class="list-group-item list-group-item-action rounded-0"
         :class="{ active }">
         <div class="media">
-            <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+            <!-- <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle"> -->
+            <img src="build/images/robot-01.png" alt="user" width="50" class="rounded-circle">
             <div class="media-body ml-4">
             <div class="d-flex align-items-center justify-content-between mb-1">
                 <h6 class="mb-0">{{ conversation.username }}</h6><small class="small font-weight-bold">{{ date }}</small>
