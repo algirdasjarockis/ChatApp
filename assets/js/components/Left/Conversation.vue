@@ -5,7 +5,7 @@
         :class="{ active }">
         <div class="media">
             <!-- <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle"> -->
-            <img src="build/images/robot-01.png" alt="user" width="50" class="rounded-circle">
+            <img :src="avatar" alt="user" width="50" class="avatar">
             <div class="media-body ml-4">
             <div class="d-flex align-items-center justify-content-between mb-1">
                 <h6 class="mb-0">{{ conversation.username }}</h6><small class="small font-weight-bold">{{ date }}</small>
@@ -28,6 +28,10 @@
 
             active() {
                 return this.conversation.conversationId == this.$route.params.id;
+            },
+
+            avatar() {
+                return `build/images/${this.conversation.avatarFileName}`;
             }
         }
     }

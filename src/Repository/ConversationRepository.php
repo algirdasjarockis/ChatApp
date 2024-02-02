@@ -53,7 +53,7 @@ class ConversationRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('c');
         $qb
-            ->select('otherUser.username', 'c.id as conversationId', 'm.content', 'm.createdAt')
+            ->select('otherUser.username', 'otherUser.avatarFileName', 'c.id as conversationId', 'm.content', 'm.createdAt')
             ->innerJoin('c.participants', 'p', Join::WITH, $qb->expr()->neq('p.appUser', ':user'))
             ->innerJoin('c.participants', 'me', Join::WITH, $qb->expr()->neq('p.appUser', ':user'))
             ->leftJoin('c.lastMessage', 'm')
@@ -71,29 +71,4 @@ class ConversationRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($conversation);
         $this->getEntityManager()->flush();
     }
-
-//    /**
-//     * @return Conversation[] Returns an array of Conversation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Conversation
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -107,7 +107,8 @@ class Message implements \JsonSerializable
             "content" => $this->getContent(),
             "createdAt" => $this->getCreatedAt(),
             "mine" => $this->isMine(),
-            "conversationId" => $this->getConversation()->getId()
+            "conversationId" => $this->getConversation()->getId(),
+            "userAvatar" => $this->getAppUser()->getAvatarFileName(),
         ];
     }
 }

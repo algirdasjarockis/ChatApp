@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,21 +35,13 @@ class MessageRepository extends ServiceEntityRepository
    public function findByConversation(Conversation $conversation): array
    {
        return $this->createQueryBuilder('m')
-           ->andWhere('m.conversation = :conversation')
-           ->setParameter('conversation', $conversation)
-           ->orderBy('m.id', 'ASC')
-           ->getQuery()
-           ->getResult()
+            ->select('m', 'u')
+            ->leftJoin('m.appUser', 'u')
+            ->andWhere('m.conversation = :conversation')
+            ->setParameter('conversation', $conversation)
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getResult()
        ;
    }
-
-//    public function findOneBySomeField($value): ?Message
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -14,7 +14,6 @@
 <script>
     import Message from './Message.vue';
     import Input from './Input.vue';
-import { watch } from 'vue';
 
     export default {
         components: { Message, Input },
