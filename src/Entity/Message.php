@@ -106,7 +106,8 @@ class Message implements \JsonSerializable
             "id" => $this->getId(),
             "content" => $this->getContent(),
             "createdAt" => $this->getCreatedAt(),
-            "mine" => $this->isMine()
+            "mine" => $this->isMine(),
+            "conversationId" => $this->getConversation()->getId()
         ];
     }
 }

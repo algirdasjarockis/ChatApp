@@ -67,7 +67,13 @@ class ConversationController extends AbstractController
 
         $this->addLink($request, new Link('mercure', $this->getParameter('mercure_hub_url')));
 
-        return $this->json($conversations);
+        return $this->json(
+            [
+                'hubUrl' => $this->getParameter('mercure_hub_url'),
+                'topics' => array_map(fn($conversation) => "conversations/{$conversation['conversationId']}", $conversations),
+                'conversations' => $conversations,
+            ]
+        );
     }
 
     private function createConversation(User $withUser) : Conversation

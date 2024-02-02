@@ -54,10 +54,10 @@ class MessageController extends AbstractController
         );
     }
 
-    #[Route('/newMessage/{id}', name: 'app_messages_new', methods: ['GET'])]
+    #[Route('/newMessage/{id}', name: 'app_messages_new', methods: ['POST'])]
     public function newMessage(Request $request, Conversation $conversation): Response
     {
-        $content = trim($request->query->get('content', null));
+        $content = trim($request->request->get('content', null));
 
         if (empty($content)) {
             throw new BadRequestException();
@@ -66,6 +66,7 @@ class MessageController extends AbstractController
         $message = new Message();
         $message->setAppUser($this->getUser());
         $message->setContent($content);
+        $message->setIsMine(true);
 
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
@@ -73,20 +74,18 @@ class MessageController extends AbstractController
         $this->messageRepository->saveMessage($message);
         $this->conversationRepository->saveConversation($conversation);
 
+        $messageForMercure = $messageToResponse = $message->jsonSerialize();
+
+        $messageForMercure['userId'] = $this->getUser()->getId();
         $update = new Update(
-            [
-                "conversations/{$conversation->getId()}"
-            ],
-            json_encode([
-                'content' => $message->getContent(),
-                'timestamp' => $message->getCreatedAt()->format('Y-m-d H:i:s')
-            ]),
-            true
+            ["conversations/{$conversation->getId()}"],
+            json_encode($messageForMercure),
+            false
         );
 
         $this->hub->publish($update);
 
-        return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => ['id','content']]);
+        return $this->json($messageToResponse, Response::HTTP_CREATED, [], ['attributes' => ['id','content']]);
     }
 
     //private function publishToMercure()
