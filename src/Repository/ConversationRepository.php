@@ -65,10 +65,4 @@ class ConversationRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
-    public function saveConversation(Conversation $conversation)
-    {
-        $this->getEntityManager()->persist($conversation);
-        $this->getEntityManager()->flush();
-    }
 }
