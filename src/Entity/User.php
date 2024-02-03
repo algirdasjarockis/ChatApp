@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $avatarFileName = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $displayName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,6 +114,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatarFileName(?string $avatarFileName): static
     {
         $this->avatarFileName = $avatarFileName;
+
+        return $this;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(string $displayName): static
+    {
+        $this->displayName = $displayName;
 
         return $this;
     }

@@ -8,7 +8,7 @@
             <img :src="avatar" alt="user" width="50" class="avatar">
             <div class="media-body ml-4">
             <div class="d-flex align-items-center justify-content-between mb-1">
-                <h6 class="mb-0">{{ conversation.username }}</h6><small class="small font-weight-bold">{{ date }}</small>
+                <h6 class="mb-0">{{ conversation.displayName || conversation.username }}</h6><small class="small font-weight-bold">{{ date }}</small>
             </div>
             <p class="font-italic mb-0 text-small">{{ conversation.content }}</p>
             </div>
@@ -23,7 +23,9 @@
         },
         computed: {
             date() {
-                return new Date(this.conversation.createdAt?.date).toLocaleTimeString();
+                return this.conversation.createdAt != null
+                    ? new Date(this.conversation?.createdAt?.date).toLocaleTimeString()
+                    : '';
             },
 
             active() {

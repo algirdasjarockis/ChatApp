@@ -17,13 +17,13 @@ class UserService implements UserServiceInterface
         $this->entityManager = $entityManager;
     }
 
-    public function persistNewUser(User $user, string $plainPassword): void
+    public function persistNewUser(User $user, string $plainPassword, bool $flush = true): void
     {
         $user->setPassword(
             $this->userPasswordHasher->hashPassword($user, $plainPassword)
         );
 
         $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $flush && $this->entityManager->flush();
     }
 }

@@ -7,7 +7,7 @@ export default {
     },
     getters: {
         CONVERSATIONS: state => state.conversations.sort((a, b) =>
-            new Date(b.createdAt.date) - new Date(a.createdAt.date)),
+            new Date(b?.createdAt?.date) - new Date(a?.createdAt?.date)),
         MESSAGES: state => state.messages,
         SSE_CONFIG: state => state.sseConfig
     },
