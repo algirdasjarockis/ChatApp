@@ -8,14 +8,13 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
-import Vue from 'vue';
-import VueRouter from 'vue-router';
 import store from './js/store/store';
 import App from './js/App';
 import Blank from './js/components/Right/Blank';
 import Right from './js/components/Right/Right';
-
-Vue.use(VueRouter);
+import { createMemoryHistory, createRouter } from 'vue-router';
+import { createApp } from 'vue';
+import { h } from 'vue';
 
 const routes = [
     {
@@ -30,17 +29,20 @@ const routes = [
     }
 ];
 
-const router = new VueRouter({
-    mode: "abstract",
-    routes
-});
-
 store.state.userId = document.querySelector('#app').dataset.user;
 
-new Vue({
+const router = createRouter({
+    routes,
+    history: createMemoryHistory()
+});
+
+const app = createApp({
     store,
     router,
-    render: h => h(App)
-}).$mount('#app');
+    render: _ => h(App)
+});
 
-router.replace('')
+app.use(store);
+app.use(router);
+
+app.mount('#app');

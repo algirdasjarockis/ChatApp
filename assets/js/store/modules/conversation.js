@@ -17,7 +17,7 @@ export default {
         },
         SET_MESSAGES: (state, { payload, conversationId }) => {
             state.messages = payload;
-            state.activeConversationId = conversationId;
+            state.activeConversationId = Number(conversationId);
         },
         ADD_MESSAGE: (state, payload) => {
             if (state.activeConversationId === payload.conversationId)

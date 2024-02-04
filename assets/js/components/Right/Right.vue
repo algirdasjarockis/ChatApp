@@ -5,8 +5,6 @@
           <Message :message="message"/>
         </template> 
       </div>
-
-      <!-- Typing area -->
       <Input />
     </div>
 </template>
@@ -32,10 +30,13 @@
             this.$store.dispatch('GET_MESSAGES', this.$route.params.id);
         },
         watch: {
-            messages(val) {
-                this.$nextTick(() => {
-                    this.scrollDown();
-                })
+            messages: {
+                handler() {
+                    this.$nextTick(() => {
+                        this.scrollDown();
+                    })
+                },
+                deep: true
             }
         }
     }
