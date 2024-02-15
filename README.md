@@ -1,6 +1,6 @@
 # ChatApp demo
 
-Simple chat program for demo purposes built with PHP Symfony, Vue and using [Mercure](https://mercure.rocks/) for **S**erver-**s**ent **E**vents.
+Simple chat program for demo purposes built with PHP Symfony, 2 UI frontends (Vue+React) and using [Mercure](https://mercure.rocks/) for **S**erver-**s**ent **E**vents.
 
 ![](chats.png "Main Screen")
 
@@ -11,6 +11,9 @@ Simple chat program for demo purposes built with PHP Symfony, Vue and using [Mer
 ### Stack
 - Symfony 7
 - Vue 3
+- React 18 + Redux Toolkit
 - PostgreSql
 - Mercure
 - Docker Compose
+
+To access React UI, GET parameter with name 'react' must be passed, i.e.: http://localhost:8000?react
