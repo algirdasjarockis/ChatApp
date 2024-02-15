@@ -1,4 +1,4 @@
-import { setConversations, setMessages, setSseConfig } from "../reducers/conversation"
+import { addMessage, setConversations, setMessages, setSseConfig } from "../reducers/conversation"
 
 export const fetchConversations = (dispatch) => {
     return fetch('/conversations')
@@ -14,5 +14,16 @@ export const fetchMessages = (dispatch, conversationId) => {
         .then(result => result.json())
         .then(result => {
             dispatch(setMessages({ messages: result, conversationId }));
+        })
+}
+
+export const postMessage = (dispatch, { conversationId, content }) => {
+    let body = new FormData();
+    body.append('content', content);
+
+    return fetch(`/newMessage/${conversationId}`, { method: 'POST', body })
+        .then(result => result.json())
+        .then(result => {
+            dispatch(addMessage(result));
         })
 }

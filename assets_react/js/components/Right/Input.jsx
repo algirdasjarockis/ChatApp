@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { postMessage } from "../../actions/conversation";
+import { useDispatch } from "react-redux";
 
-class Input extends React.Component
-{
-    render() {
-        return (
-            <form action="#" className="bg-light">
-                <div className="input-group">
-                    <input 
-                        v-model="content"
-                        type="text" placeholder="Type a message" aria-describedby="button-addon2" className="form-control rounded-0 border-0 py-4 bg-light" />
-                    <div className="input-group-append">
-                    <button 
-                        id="button-addon2" type="submit" className="btn btn-link"> <i className="fa fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </form>
-        );
+const Input = ({ conversationId }) => {
+    const [content, setContent] = useState('');
+    const dispatch = useDispatch();
+
+    function executePost(event) {
+        event.preventDefault();
+
+        if (content.trim() === '')
+            return;
+
+        postMessage(dispatch, { conversationId, content});
+        setContent('');
     }
+
+    function handleKeyPress(event) {
+        if (event.key == "Enter")
+            executePost(event);
+    }
+
+    return (
+        <div className="input-group bg-light">
+            <input type="text" placeholder="Type a message" className="form-control rounded-0 border-0 py-4 bg-light"
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                onKeyUp={handleKeyPress}/>
+            <div className="input-group-append">
+            <button 
+                type="button" className="btn btn-link"
+                onClick={executePost}> <i className="fa fa-paper-plane"></i></button>
+            </div>
+        </div>
+    );
 }
 
 export default Input;

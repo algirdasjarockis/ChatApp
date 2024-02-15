@@ -11,7 +11,7 @@
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('reactApp') }}
+            {{ encore_entry_script_tags(app.request.query.has('react') ? 'reactApp' : 'app') }}
         {% endblock %}
         {% block inline_css %}{% endblock %}
     </head>

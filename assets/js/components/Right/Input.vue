@@ -1,6 +1,5 @@
 <template>
-    <form action="#" class="bg-light">
-    <div class="input-group">
+    <div class="input-group bg-light">
         <input 
             v-model="content" @keyup.enter="sendMessage"
             type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
@@ -10,7 +9,6 @@
             id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
         </div>
     </div>
-    </form>
 </template>
 <script>
     export default {

@@ -29,6 +29,8 @@ const routes = [
     }
 ];
 
+const madeWithEl = document.getElementsByClassName('made-with')[0];
+madeWithEl.innerText = "Made with Vue";
 store.state.userId = document.querySelector('#app').dataset.user;
 
 const router = createRouter({

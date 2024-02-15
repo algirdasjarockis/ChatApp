@@ -3,13 +3,14 @@ import Left from "./components/Left/Left";
 import Right from "./components/Right/Right";
 import Blank from "./components/Right/Blank";
 import { Route, Routes } from "react-router-dom"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "./reducers/conversation";
 
-const App = (userId) => {
+const App = ({ userId }) => {
     const sseConfig = useSelector((state) => state.conversation.sseConfig);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('----- sseconfig setup ---');
         if (Object.keys(sseConfig).length == 0)
             return;
 
@@ -29,7 +30,7 @@ const App = (userId) => {
 
             message.mine = false;
 
-            //this.$store.dispatch('GET_MESSAGE', message);
+            dispatch(addMessage(message));
             console.log(`Mercure event: ${event.data}`);
         }
     }, [sseConfig.hubUrl, sseConfig.topics]);

@@ -18,13 +18,16 @@ const slice = createSlice({
             state.messages = payload.messages;
             state.activeConversationId = Number(payload.conversationId);
         },
-        addMessage: (state, payload) => {
+        addMessage: (state, { payload }) => {
             if (state.activeConversationId === payload.conversationId)
                 state.messages.push(payload);
 
             let conversation = state.conversations.find(i => i.conversationId === payload.conversationId) ?? {};
             conversation.content = payload.content;
             conversation.createdAt = payload.createdAt;
+
+            state.conversations = state.conversations.sort((a, b) =>
+                new Date(b?.createdAt?.date) - new Date(a?.createdAt?.date))
         },
         setSseConfig: (state, { payload }) => {
             state.sseConfig = payload;
